@@ -1,9 +1,8 @@
 /** Express app for message.ly. */
 
-
 const express = require("express");
 const cors = require("cors");
-const { authenticateJWT } = require("./middleware/auth");
+const { authenticateJWT, ensureLoggedIn } = require("./middleware/auth");
 
 const ExpressError = require("./expressError")
 const app = express();
@@ -25,6 +24,7 @@ const userRoutes = require("./routes/users");
 const messageRoutes = require("./routes/messages");
 
 app.use("/auth", authRoutes);
+app.use(ensureLoggedIn);
 app.use("/users", userRoutes);
 app.use("/messages", messageRoutes);
 
